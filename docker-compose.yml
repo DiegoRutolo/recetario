@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  db:
+    image: mysql/mysql-server:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=abc123.
+      - MYSQL_DATABASE=recetario
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+    ports:
+      - '3306:3306'
