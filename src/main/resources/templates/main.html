@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+	</head>
+	<body>
+		<h1>Recetas</h1>
+		<ul>
+			<th:block th:each="receta : ${recetas}">
+				<li th:text="${receta.nombre}"></li>
+			</th:block>
+		</ul>
+	</body>
+</html>

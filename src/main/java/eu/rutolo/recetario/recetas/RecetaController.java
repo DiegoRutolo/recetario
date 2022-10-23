@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,5 +35,11 @@ public class RecetaController {
     public ResponseEntity<Receta> post(@RequestBody Receta receta) {
         Receta result = recetaRepository.save(receta);
         return new ResponseEntity<Receta>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/ver")
+    public String verRecetas(Model model) {
+        model.addAttribute("recetas", recetaRepository.findAll());
+        return "main";
     }
 }
