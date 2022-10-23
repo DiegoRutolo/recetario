@@ -17,25 +17,43 @@ import eu.rutolo.recetario.recetas.RecetaRepository;
 @TestPropertySource(locations = {"classpath:application-test.properties"})
 class RecetarioApplicationTests {
 
+	private final int TAMANHO_INICIAL = 0;
+
 	@Autowired
 	private RecetaRepository recetaRepository;
 
 	@Test
 	void contextLoads() {
+		assertNotNull(recetaRepository);
+
+		List<Receta> recetas = recetaRepository.findAll();
+		assertEquals(TAMANHO_INICIAL, recetas.size());
 	}
 
 	@Test
 	void crudReceta() {
-		List<Receta> recetas = recetaRepository.findAll();
-		assertEquals(0, recetas.size());
-
+		// Create
+		String nombreInicial = "Patatas asadas";
 		Receta r1 = new Receta();
-		r1.setNombre("Patatas cocidas");
+		r1.setNombre(nombreInicial);
 		r1 = recetaRepository.save(r1);
-		assertNotNull(r1.getId());
+		List<Receta> recetas = recetaRepository.findAll();
+		assertEquals(TAMANHO_INICIAL+1, recetas.size());
 
+		// Read
+		assertNotNull(r1.getId());
+		assertEquals(nombreInicial, r1.getNombre());
+
+		// Update
+		String nombreNuevo = "Patatas panadera";
+		r1.setNombre(nombreNuevo);
+		r1 = recetaRepository.save(r1);
+		assertEquals(nombreNuevo, r1.getNombre());
+
+		// Delete
+		recetaRepository.delete(r1);
 		recetas = recetaRepository.findAll();
-		assertEquals(1, recetas.size());
+		assertEquals(TAMANHO_INICIAL, recetas.size());
 	}
 
 }
