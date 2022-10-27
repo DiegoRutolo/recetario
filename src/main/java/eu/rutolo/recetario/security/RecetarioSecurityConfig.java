@@ -20,14 +20,15 @@ public class RecetarioSecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.userDetailsService(userDetailsService)
-			.authorizeHttpRequests((requests) -> requests.antMatchers("/", "/home").permitAll()
-			.anyRequest().authenticated())
-			.formLogin((form) -> form
-					.loginPage("/login")
-					.permitAll())
-			.logout((logout) -> logout.permitAll());
-		return http.build();
+		return http
+			.userDetailsService(userDetailsService)
+			.authorizeRequests(auth -> auth
+				.antMatchers("/", "/login", "/logout").permitAll()
+				.anyRequest().authenticated()
+			).formLogin(form -> form
+				.loginPage("/login").permitAll()
+			).logout(logout -> logout.permitAll()
+			).build();
 	}
 
 	@Bean
