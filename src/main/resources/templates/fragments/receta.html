@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+  <span th:fragment="receta (receta)" th:object="${receta}" th:text="*{nombre}">
+  </span>
+
+</body>
+</html>

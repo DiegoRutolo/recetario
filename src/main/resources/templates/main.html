@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<title>Recetario</title>
+		<title th:text="#{recetario}"></title>
+		
 	</head>
 	<body>
 		<h1>Página principal</h1>
 		<p>Página principal del recetario. Pública. Con lista de recetas.</p>
-		<th:a href="@{/perfil}">Perfil</th:a>
+		<a th:href="@{/login}">Login</a>
 		<ul>
 			<th:block th:each="receta : ${recetas}">
-				<li th:text="${receta.nombre}"></li>
+				<li th:insert="~{fragments/receta :: receta (${receta})}"></li>
 			</th:block>
 		</ul>
+
+		<div th:replace="~{fragments/common :: footer (_, 'HOLI')}"></div>
 	</body>
 </html>

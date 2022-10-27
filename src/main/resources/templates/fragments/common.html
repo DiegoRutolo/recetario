@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+  <footer th:fragment="footer (color, txtInicial)">
+    <div th:style="|color: ${color};|" th:text="|${txtInicial} - SOY UN FOOTER|">SOY UN FOOTER</div>
+  </footer>
+
+</body>
+</html>

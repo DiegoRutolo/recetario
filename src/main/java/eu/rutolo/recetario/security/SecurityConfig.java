@@ -13,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity @EnableMethodSecurity
-public class RecetarioSecurityConfig {
+public class SecurityConfig {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -25,8 +25,7 @@ public class RecetarioSecurityConfig {
 			.authorizeRequests(auth -> auth
 				.antMatchers("/", "/login", "/logout").permitAll()
 				.anyRequest().authenticated()
-			).formLogin(form -> form
-				.loginPage("/login").permitAll()
+			).formLogin(form -> form.permitAll()
 			).logout(logout -> logout.permitAll()
 			).build();
 	}
