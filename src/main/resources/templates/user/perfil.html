@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html th:replace="~{/fragments/layout :: layout(~{::title}, ~{::#content})}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="|#{recetario} - #{common.perfil}|"></title>
+</head>
+    
+<body>
+    <div id="content">
+        <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+        
+    </div>
+</body>
+
+</html>

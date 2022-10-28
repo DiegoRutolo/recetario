@@ -31,6 +31,7 @@ public class Usuario implements UserDetails {
 	@Override
 	public Collection<SimpleGrantedAuthority> getAuthorities() {
 		return Arrays.stream(this.authorities.split(","))
+			// .peek(System.out::println)
 			.map(SimpleGrantedAuthority::new)
 			.collect(Collectors.toList());
 	}

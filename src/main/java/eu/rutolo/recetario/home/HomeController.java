@@ -3,6 +3,7 @@ package eu.rutolo.recetario.home;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,14 +15,13 @@ import eu.rutolo.recetario.recetas.Receta;
 import eu.rutolo.recetario.recetas.RecetaRepository;
 
 @Controller
-@RequestMapping("/")
 public class HomeController {
     // private final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @Autowired
     RecetaRepository recetaRepository;
 
-    @GetMapping
+    @GetMapping("/")
     public String base(Model model) {
         model.addAttribute(
             "recetas",
@@ -34,19 +34,8 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/home")
-    public String home(Model model) {
-        return "private/perfil";
-    }
-
-    @GetMapping("/login")
-    public String login(Model model) {
-        return "public/login";
-    }
-
     @GetMapping("/perfil")
-    @PreAuthorize("hasRole('ROL_USER')")
     public String perfil(Model model) {
-        return "private/perfil";
+        return "user/perfil";
     }
 }
