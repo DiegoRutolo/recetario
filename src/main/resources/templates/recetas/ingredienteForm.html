@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html th:replace="~{/fragments/layout :: layout(~{::title}, ~{::#content})}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:text="|#{recetario} - #{common.txt.create(#{ingrediente})}|"></title>
+</head>
+
+<body>
+	<div id="content">
+		<h1 th:text="#{common.txt.create(#{ingrediente})}">INGREDIENTES</h1>
+		<form action="#" th:action="@{/ingrediente}" method="post" th:object="${ingrediente}">
+			<input type="hidden" th:field="*{id}">
+			<div class="mt-3 mb-3">
+				<label class="form-label" for="nombre" th:text="#{common.nombre}">Nombre</label>
+				<input class="form-control" type="text" th:field="*{nombre}" id="nombre" th:placeholder="#{common.nombre}">
+				<span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
+			</div>
+			<div class="mb-3">
+				<label for="tipoCantidad">Tipo cantidad</label>
+				<select name="tipoCantidad" class="form-select" id="tipoCantidad" th:field="*{tipoCantidad}">
+					<option th:each="tc : ${T(eu.rutolo.recetario.recetas.TipoCantidad).values()}"
+						th:value="${tc}" th:text="#{ingrediente.tipoCantidad.__${tc}__}">
+					</option>
+				</select>
+				<span th:if="${#fields.hasErrors('tipoCantidad')}" th:errors="*{tipoCantidad}"></span>
+			</div>
+			<button type="submit" class="btn btn-primary">Guardar</button>
+			<a th:if="${ingrediente.id}" class="btn btn-danger" th:href="@{/ingrediente/delete/__${ingrediente.id}__}">Eliminar</a>
+		</form>
+	</div>
+</body>
+
+</html>

@@ -11,7 +11,7 @@
 		<p>Página principal del recetario. Pública. Con lista de recetas.</p>
 		<ul>
 			<th:block th:each="receta : ${recetas}">
-				<li th:insert="~{fragments/receta :: receta (${receta})}"></li>
+				<li th:insert="~{fragments/recetas :: receta(${receta})}"></li>
 			</th:block>
 		</ul>
 	</div>

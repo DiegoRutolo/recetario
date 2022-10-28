@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html th:replace="~{/fragments/layout :: layout(~{::title}, ~{::#content})}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:text="|#{recetario} - #{ingrediente.p}|"></title>
+</head>
+
+<body>
+	<div id="content">
+		<h1 th:text="#{common.txt.lista(#{ingrediente.p})}">INGREDIENTES</h1>
+		<div class="text-center">
+			<a class="btn btn-success" th:href="@{/ingrediente/new}" th:text="#{common.txt.create(#{ingrediente})}"></a>
+		</div>
+		<div class="container m-5">
+			<div class="list-group">
+				<th:block th:each="ingrediente : ${ingredientes}">
+					<li th:replace="~{fragments/recetas :: ingrediente(${ingrediente})}"></li>
+				</th:block>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

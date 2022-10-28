@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+  <span th:fragment="receta(receta)" th:object="${receta}" th:text="*{nombre}">
+	</span>
+
+	<a th:fragment="ingrediente(ingrediente)" th:object="${ingrediente}"
+		class="list-group-item list-group-item-action" th:text="*{nombre}"
+		th:href="|@{/ingrediente/__*{id}__}|">
+	</a>
+</body>
+</html>

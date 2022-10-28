@@ -10,7 +10,7 @@
 		<h1>Lista de recetas</h1>
 		<ul>
 			<th:block th:each="receta : ${recetas}">
-				<li th:insert="~{fragments/receta :: receta (${receta})}"></li>
+				<li th:insert="~{fragments/recetas :: receta(${receta})}"></li>
 			</th:block>
 		</ul>
 	</div>
