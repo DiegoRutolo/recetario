@@ -9,7 +9,6 @@
 	<div id="content">
 		<h1>Página principal</h1>
 		<p>Página principal del recetario. Pública. Con lista de recetas.</p>
-		<a th:href="@{/login}">Login</a>
 		<ul>
 			<th:block th:each="receta : ${recetas}">
 				<li th:insert="~{fragments/receta :: receta (${receta})}"></li>
