@@ -26,7 +26,8 @@ public class SecurityConfig {
 			.userDetailsService(userDetailsService)
 			.authorizeRequests(auth -> auth
 				.antMatchers("/", "/login", "/logout").permitAll()
-				.antMatchers("/ingrediente", "/ingrediente/**").hasAuthority(Constants.ROL_ADMIN)
+				.antMatchers("/admin**").hasAuthority(Constants.ROL_ADMIN)
+				.antMatchers("/ingrediente**").hasAuthority(Constants.ROL_ADMIN)
 				.anyRequest().authenticated()
 			).formLogin(form -> form.permitAll()
 			).logout(logout -> logout.permitAll()
