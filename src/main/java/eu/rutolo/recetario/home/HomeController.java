@@ -31,7 +31,7 @@ public class HomeController {
                     return recetaRepository.findAll();
                 }
             });
-        return "main";
+        return "index";
     }
 
     @GetMapping("/home")

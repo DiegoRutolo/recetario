@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<title th:text="#{recetario}"></title>
-		
-	</head>
-	<body>
+<html th:replace="~{/fragments/layout :: layout(~{::title}, ~{::#content})}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:text="|#{recetario} - Index|"></title>
+</head>
+
+<body>
+	<div id="content">
 		<h1>Página principal</h1>
 		<p>Página principal del recetario. Pública. Con lista de recetas.</p>
 		<a th:href="@{/login}">Login</a>
@@ -13,7 +15,7 @@
 				<li th:insert="~{fragments/receta :: receta (${receta})}"></li>
 			</th:block>
 		</ul>
+	</div>
+</body>
 
-		<div th:replace="~{fragments/common :: footer (_, 'HOLI')}"></div>
-	</body>
 </html>

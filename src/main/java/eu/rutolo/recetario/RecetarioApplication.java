@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import eu.rutolo.recetario.recetas.Receta;
+import eu.rutolo.recetario.recetas.RecetaRepository;
 import eu.rutolo.recetario.security.users.Usuario;
 import eu.rutolo.recetario.security.users.UsuarioRepository;
 
@@ -17,10 +19,13 @@ public class RecetarioApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+	public CommandLineRunner commandLineRunner(RecetaRepository recetaRepository, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
 		return args -> {
 			usuarioRepository.save(new Usuario("admin", passwordEncoder.encode("admin"), true, "ROL_USER,ROL_ADMIN"));
 			usuarioRepository.save(new Usuario("user", passwordEncoder.encode("password"), true, "ROL_USER"));
+
+			recetaRepository.save(new Receta(1l, "Patatas fritas"));
+			recetaRepository.save(new Receta(2l, "Patatas cocidas"));
 		};
 	}
 
