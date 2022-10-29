@@ -22,4 +22,6 @@ public class Ingrediente {
 	/** La forma más típica de medir este ingrediente */
 	@Enumerated(EnumType.STRING)
 	private TipoCantidad tipoCantidad;
+
+	private String foto;
 }
