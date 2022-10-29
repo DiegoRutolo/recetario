@@ -8,7 +8,14 @@
 <body>
     <div id="content">
         <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-        
+        <p>Aqui puedes cambiar tu contraseña</p>
+        <form action="#" th:action="@{/perfil/changePasswd}" method="post">
+			<div class="mb-3">
+				<label class="form-label" for="password">password</label>
+				<input type="password" class="form-control" id="password" name="password" placeholder="password">
+			</div>
+			<button type="submit" class="btn btn-primary">Guardar</button>
+		</form>
     </div>
 </body>
 

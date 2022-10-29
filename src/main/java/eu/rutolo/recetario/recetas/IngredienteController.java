@@ -22,13 +22,13 @@ public class IngredienteController {
 	@GetMapping
 	public String listAll(Model model) {
 		model.addAttribute(
-            "ingredientes",
-            new LazyContextVariable<List<Ingrediente>>() {
-                @Override
-                protected List<Ingrediente> loadValue() {
-                    return ingredienteRepository.findAll();
-                }
-            });
+			"ingredientes",
+			new LazyContextVariable<List<Ingrediente>>() {
+				@Override
+				protected List<Ingrediente> loadValue() {
+					return ingredienteRepository.findAll();
+				}
+			});
 		return "recetas/ingredientes";
 	}
 

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html th:replace="~{/fragments/layout :: layout(~{::title}, ~{::#content})}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Recetario - Gestion de usuarios</title>
+</head>
+
+<body>
+	<div id="content">
+		<h1>USUARIOS</h1>
+		<div class="text-center">
+			<a class="btn btn-success" th:href="@{/admin/user/new}">Añadir usuario</a>
+		</div>
+		<div class="container m-5">
+			<div class="list-group">
+				<a class="list-group-item list-group-item-action"
+					th:each="u : ${usuarios}" th:object="${u}" 
+					th:text="*{username}" th:href="@{/admin/user/__*{username}__}">
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
