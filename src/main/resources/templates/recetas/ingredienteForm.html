@@ -25,10 +25,20 @@
 				<span th:if="${#fields.hasErrors('tipoCantidad')}" th:errors="*{tipoCantidad}"></span>
 			</div>
 			<div class="mb-3">
-				<label for="archivoFoto" class="form-label">archivoFoto</label>
-				<input type="file" name="archivoFoto" id="archivoFoto" accept="image/png, image/jpg, image/jpeg">
-				<span th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}"></span>
-				<img th:src="@{/ingrediente/foto/__*{id}__}">
+				<div style="max-width: 500px;">
+					<label for="archivoFoto" class="form-label">
+						<img id="imgFoto" class="img-fluid rounded" style="width: 500px;" th:src="@{/ingrediente/foto/__*{id}__}">
+					</label>
+					<input type="file" class="form-control" name="archivoFoto" id="archivoFoto" accept="image/png, image/jpg, image/jpeg">
+					<span th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}"></span>
+					<script>
+						$(function() {
+							$('#imgFoto').click(function() {
+								$("#archivoFoto").trigger("click");
+							});
+						});
+					</script>
+				</div>
 			</div>
 			<button type="submit" class="btn btn-primary">Guardar</button>
 			<a th:if="${ingrediente.id}" class="btn btn-danger" th:href="@{/ingrediente/delete/__${ingrediente.id}__}">Eliminar</a>
