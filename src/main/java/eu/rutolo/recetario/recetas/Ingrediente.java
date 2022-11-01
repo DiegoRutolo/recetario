@@ -5,6 +5,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,5 +24,6 @@ public class Ingrediente {
 	@Enumerated(EnumType.STRING)
 	private TipoCantidad tipoCantidad;
 
-	private String foto;
+	@Lob
+	private byte[] foto;
 }

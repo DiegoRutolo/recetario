@@ -27,7 +27,8 @@
 			<div class="mb-3">
 				<label for="archivoFoto" class="form-label">archivoFoto</label>
 				<input type="file" name="archivoFoto" id="archivoFoto" accept="image/png, image/jpg, image/jpeg">
-				<img th:src="*{foto}">
+				<span th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}"></span>
+				<img th:src="@{/ingrediente/foto/__*{id}__}">
 			</div>
 			<button type="submit" class="btn btn-primary">Guardar</button>
 			<a th:if="${ingrediente.id}" class="btn btn-danger" th:href="@{/ingrediente/delete/__${ingrediente.id}__}">Eliminar</a>

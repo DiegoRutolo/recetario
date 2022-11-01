@@ -1,6 +1,14 @@
 package eu.rutolo.recetario.recetas;
 
+import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/ingrediente")
 public class IngredienteController {
+	private final Logger logger = LoggerFactory.getLogger(IngredienteController.class);
 	
 	@Autowired
 	IngredienteService ingredienteService;
@@ -30,6 +39,14 @@ public class IngredienteController {
 		return "recetas/ingredienteForm";
 	}
 
+	@GetMapping(value = "/foto/{id}", produces = MediaType.IMAGE_PNG_VALUE)
+	public ResponseEntity<byte[]> getImage(@PathVariable("id") Long id) {
+		byte[] img = ingredienteService.findById(id).getFoto();
+		final HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_PNG);
+		return new ResponseEntity<>(img, headers, HttpStatus.OK);
+	}
+
 	@GetMapping("/new")
 	public String nuevoIngredienteGet(Ingrediente ingrediente, Model model) {
 		return "recetas/ingredienteForm";
@@ -37,12 +54,18 @@ public class IngredienteController {
 
 	@PostMapping
 	public String nuevoIngredientePost(Ingrediente ingrediente, @RequestParam("archivoFoto") MultipartFile file,
-			BindingResult result, Model model) {
+			BindingResult result, Model model) throws IOException {
+		logger.debug("Intentando guardar " + ingrediente.toString());
 		if (result.hasErrors()) {
+			logger.debug(result.toString());
 			return "recetas/ingredienteForm";
 		}
 
-		ingredienteService.save(ingrediente, file);
+		if (file != null && !file.isEmpty()) {
+			ingrediente.setFoto(file.getBytes());
+		}
+
+		ingredienteService.save(ingrediente);
 		return "redirect:/ingrediente";
 	}
 
