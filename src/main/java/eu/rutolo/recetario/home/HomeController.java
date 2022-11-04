@@ -1,7 +1,5 @@
 package eu.rutolo.recetario.home;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.thymeleaf.context.LazyContextVariable;
 
-import eu.rutolo.recetario.recetas.Receta;
-import eu.rutolo.recetario.recetas.RecetaRepository;
+import eu.rutolo.recetario.recetas.RecetaService;
 import eu.rutolo.recetario.security.users.UserDetailsServiceImpl;
 
 @Controller
@@ -21,21 +17,14 @@ public class HomeController {
     // private final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @Autowired
-    RecetaRepository recetaRepository;
+    RecetaService recetaService;
 
     @Autowired
 	UserDetailsServiceImpl userDetailsServiceImpl;
 
     @GetMapping("/")
     public String base(Model model) {
-        model.addAttribute(
-            "recetas",
-            new LazyContextVariable<List<Receta>>() {
-                @Override
-                protected List<Receta> loadValue() {
-                    return recetaRepository.findAll();
-                }
-            });
+        model.addAttribute("recetas", recetaService.findAll());
         return "index";
     }
 

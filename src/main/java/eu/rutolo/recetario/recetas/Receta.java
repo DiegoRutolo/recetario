@@ -6,7 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
+import eu.rutolo.recetario.security.users.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,5 +22,8 @@ public class Receta implements Serializable {
     private Long id;
 
     private String nombre;
+
+    @ManyToOne
+    private Usuario creador;
 
 }

@@ -1,33 +1,25 @@
 package eu.rutolo.recetario.recetas;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.thymeleaf.context.LazyContextVariable;
+
+import eu.rutolo.recetario.security.users.Usuario;
 
 @Controller
 @RequestMapping("/receta")
 public class RecetaController {
-
     // private final Logger logger = LoggerFactory.getLogger(RecetaController.class);
 
     @Autowired
-    private RecetaRepository recetaRepository;
+    private RecetaService recetaService;
     
     @GetMapping
-    public String verRecetas(Model model) {
-        model.addAttribute(
-            "recetas",
-            new LazyContextVariable<List<Receta>>() {
-                @Override
-                protected List<Receta> loadValue() {
-                    return recetaRepository.findAll();
-                }
-            });
+    public String verRecetas(Model model, @AuthenticationPrincipal Usuario usuario) {
+        model.addAttribute("recetas", recetaService.findByCreador(usuario));
         return "recetas/recetasMain";
     }
 }

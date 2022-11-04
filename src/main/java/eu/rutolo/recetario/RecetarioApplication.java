@@ -27,8 +27,8 @@ public class RecetarioApplication {
 			usuarioRepository.save(new Usuario("admin", passwordEncoder.encode("admin"), true, true, true));
 			usuarioRepository.save(new Usuario("user", passwordEncoder.encode("password"), true, true, false));
 
-			recetaRepository.save(new Receta(1l, "Patatas fritas"));
-			recetaRepository.save(new Receta(2l, "Patatas cocidas"));
+			recetaRepository.save(new Receta(1l, "Patatas fritas", null));
+			recetaRepository.save(new Receta(2l, "Patatas cocidas", null));
 		};
 	}
 
