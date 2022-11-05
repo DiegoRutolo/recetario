@@ -21,7 +21,7 @@ public class RecetarioApplication {
 	}
 
 	@Bean
-	@Profile("ninguno")
+	//@Profile("ninguno")
 	public CommandLineRunner commandLineRunner(RecetaRepository recetaRepository, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
 		return args -> {
 			usuarioRepository.save(new Usuario("admin", passwordEncoder.encode("admin"), true, true, true));
