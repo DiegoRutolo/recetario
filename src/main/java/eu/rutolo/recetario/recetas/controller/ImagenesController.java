@@ -1,5 +1,7 @@
 package eu.rutolo.recetario.recetas.controller;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,7 +26,7 @@ public class ImagenesController {
 	private RecetaService recetaService;
 
 	@GetMapping(value = "/ingrediente/{id}", produces = MediaType.IMAGE_PNG_VALUE)
-	public ResponseEntity<byte[]> getIngrediente(@PathVariable("id") Long id) {
+	public ResponseEntity<byte[]> getIngrediente(@PathVariable("id") UUID id) {
 		byte[] img = ingredienteService.findById(id).getFoto();
 		final HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);
@@ -32,7 +34,7 @@ public class ImagenesController {
 	}
 
 	@GetMapping(value = "/receta/{id}", produces = MediaType.IMAGE_PNG_VALUE)
-	public ResponseEntity<byte[]> getReceta(@PathVariable("id") Long id) {
+	public ResponseEntity<byte[]> getReceta(@PathVariable("id") UUID id) {
 		byte[] img = recetaService.findById(id).getFoto();
 		final HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);

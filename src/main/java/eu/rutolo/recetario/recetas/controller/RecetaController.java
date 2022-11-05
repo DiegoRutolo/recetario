@@ -1,6 +1,7 @@
 package eu.rutolo.recetario.recetas.controller;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,7 @@ public class RecetaController {
 	}
 
 	@GetMapping("/{id}")
-	public String get(@PathVariable("id") Long id, Model model) {
+	public String get(@PathVariable("id") UUID id, Model model) {
 		model.addAttribute("receta", recetaService.findById(id));
 		return "recetas/recetaForm";
 	}
@@ -63,14 +64,14 @@ public class RecetaController {
 	}
 
 	@GetMapping("/delete/{id}")
-	public String delete(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal Usuario usuario) {
+	public String delete(@PathVariable("id") UUID id, Model model, @AuthenticationPrincipal Usuario usuario) {
 
 		try {
 			Receta r = recetaService.findById(id);
 			if (usuario.equals(r.getCreador()) || usuario.isRolAdmin()) {
 				recetaService.delete(r);
 			} else {
-				logger.info(usuario.getUsername() + " intenta borrar receta " + id + " sin permisos");
+				logger.info("{} intenta borrar receta {} sin permisos", usuario.getUsername(), r.getId().toString());
 			}
 		} catch (Exception e) {
 			logger.error("Error borrando receta " + id, e);

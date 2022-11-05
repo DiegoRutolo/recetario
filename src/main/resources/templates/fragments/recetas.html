@@ -13,7 +13,7 @@
 
 	<a th:fragment="ingrediente(ingrediente)" th:object="${ingrediente}" 
 		class="list-group-item list-group-item-action"
-		th:text="*{nombre}" th:href="|@{/ingrediente/__*{id}__}|">
+		th:text="*{nombre}" th:href="@{/ingrediente/__*{id}__}">
 	</a>
 </body>
 

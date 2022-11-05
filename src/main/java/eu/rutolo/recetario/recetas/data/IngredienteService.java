@@ -1,6 +1,7 @@
 package eu.rutolo.recetario.recetas.data;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,7 @@ public class IngredienteService {
 		};
 	}
 
-	public Ingrediente findById(Long id) {
+	public Ingrediente findById(UUID id) {
 		return ingredienteRepository.findById(id)
 			.orElseThrow(IllegalArgumentException::new);
 	}
@@ -46,7 +47,7 @@ public class IngredienteService {
 		return i;
 	}
 
-	public void delete(Long id) {
+	public void delete(UUID id) {
 		delete(findById(id));
 	}
 

@@ -20,7 +20,7 @@
 			<div class="mb-3">
 				<label for="tipoCantidad" class="form-label">Tipo cantidad</label>
 				<select name="tipoCantidad" class="form-select" id="tipoCantidad" th:field="*{tipoCantidad}">
-					<option th:each="tc : ${T(eu.rutolo.recetario.recetas.TipoCantidad).values()}" th:value="${tc}"
+					<option th:each="tc : ${T(eu.rutolo.recetario.recetas.model.TipoCantidad).values()}" th:value="${tc}"
 						th:text="#{ingrediente.tipoCantidad.__${tc}__}">
 					</option>
 				</select>
@@ -30,7 +30,7 @@
 				<div style="max-width: 500px;">
 					<label for="archivoFoto" class="form-label">
 						<img id="imgFoto" class="img-fluid rounded" style="width: 500px;"
-							th:src="@{/ingrediente/foto/__*{id}__}">
+							th:src="@{/foto/ingrediente/__*{id}__}">
 					</label>
 					<input type="file" class="form-control" name="archivoFoto" id="archivoFoto"
 						accept="image/png, image/jpg, image/jpeg">
