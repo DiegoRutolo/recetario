@@ -1,4 +1,4 @@
-package eu.rutolo.recetario.recetas;
+package eu.rutolo.recetario.recetas.model;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

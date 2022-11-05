@@ -1,4 +1,4 @@
-package eu.rutolo.recetario.recetas;
+package eu.rutolo.recetario.recetas.model;
 
 import java.io.Serializable;
 
@@ -11,12 +11,10 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import eu.rutolo.recetario.security.users.Usuario;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
-@Data @NoArgsConstructor @AllArgsConstructor
+@Data
 public class Receta implements Serializable {
     
     @Id

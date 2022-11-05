@@ -1,4 +1,4 @@
-package eu.rutolo.recetario.recetas;
+package eu.rutolo.recetario.recetas.data;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import eu.rutolo.recetario.recetas.model.Receta;
 import eu.rutolo.recetario.security.users.Usuario;
 
 @Repository
