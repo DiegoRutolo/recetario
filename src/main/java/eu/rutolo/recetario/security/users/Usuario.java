@@ -13,17 +13,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 import eu.rutolo.recetario.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity @Table(name = "users")
 @Data @NoArgsConstructor @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Usuario implements UserDetails {
 	
-	@Id
+	@Id @EqualsAndHashCode.Include
 	private String username;
 
 	private String password;
 	
+	@EqualsAndHashCode.Include
 	private boolean enabled;
 	
 	private boolean rolUser;

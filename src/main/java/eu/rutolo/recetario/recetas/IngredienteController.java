@@ -48,12 +48,12 @@ public class IngredienteController {
 	}
 
 	@GetMapping("/new")
-	public String nuevoIngredienteGet(Ingrediente ingrediente, Model model) {
+	public String newIngredienteGet(Ingrediente ingrediente, Model model) {
 		return "recetas/ingredienteForm";
 	}
 
 	@PostMapping
-	public String nuevoIngredientePost(Ingrediente ingrediente, @RequestParam("archivoFoto") MultipartFile file,
+	public String newIngredientePost(Ingrediente ingrediente, @RequestParam("archivoFoto") MultipartFile file,
 			BindingResult result, Model model) throws IOException {
 		logger.debug("Intentando guardar {}", ingrediente.toString());
 		if (result.hasErrors()) {

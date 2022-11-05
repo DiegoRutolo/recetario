@@ -9,11 +9,12 @@
 	<div id="content">
 		<h1>Página principal</h1>
 		<p>Página principal del recetario. Pública. Con lista de recetas.</p>
-		<ul>
-			<th:block th:each="receta : ${recetas}">
-				<li th:insert="~{fragments/recetas :: receta(${receta})}"></li>
+		
+		<div class="card-group">
+			<th:block th:each="receta : ${recetas}" 
+				th:insert="~{fragments/recetas :: receta(${receta}, false)}">
 			</th:block>
-		</ul>
+		</div>
 	</div>
 </body>
 

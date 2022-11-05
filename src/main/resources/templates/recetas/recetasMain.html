@@ -8,11 +8,15 @@
 <body>
 	<div id="content">
 		<h1>Lista de recetas</h1>
-		<ul>
-			<th:block th:each="receta : ${recetas}">
-				<li th:insert="~{fragments/recetas :: receta(${receta})}"></li>
+		<div class="text-center">
+			<a class="btn btn-success" th:href="@{/receta/new}" th:text="#{common.txt.create(#{receta})}"></a>
+		</div>
+
+		<div class="card-group">
+			<th:block th:each="receta : ${recetas}" 
+				th:insert="~{fragments/recetas :: receta(${receta}, true)}">
 			</th:block>
-		</ul>
+		</div>
 	</div>
 </body>
 

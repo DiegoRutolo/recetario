@@ -21,14 +21,21 @@ public class RecetarioApplication {
 	}
 
 	@Bean
-	//@Profile("ninguno")
-	public CommandLineRunner commandLineRunner(RecetaRepository recetaRepository, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+	@Profile("ninguno")
+	public CommandLineRunner commandLineRunner(RecetaRepository recetaRepository, UsuarioRepository usuarioRepository, 
+			PasswordEncoder passwordEncoder) {
 		return args -> {
-			usuarioRepository.save(new Usuario("admin", passwordEncoder.encode("admin"), true, true, true));
-			usuarioRepository.save(new Usuario("user", passwordEncoder.encode("password"), true, true, false));
+			usuarioRepository.save(
+				new Usuario("admin", passwordEncoder.encode("admin"), 
+				true, true, true));
+			usuarioRepository.save(
+				new Usuario("user", passwordEncoder.encode("password"), 
+				true, true, false));
 
-			recetaRepository.save(new Receta(1l, "Patatas fritas", null));
-			recetaRepository.save(new Receta(2l, "Patatas cocidas", null));
+			recetaRepository.save(new Receta(1l, "Patatas fritas", 
+				"Unas patatillas toh ricas", null, null));
+			recetaRepository.save(new Receta(2l, "Patatas cocidas", 
+				"Unas patatillas no tan ricas", null, null));
 		};
 	}
 
