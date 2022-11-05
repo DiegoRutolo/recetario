@@ -41,7 +41,7 @@ public class IngredienteService {
 	public Ingrediente save(Ingrediente ingrediente) {
 		// TODO: Comprobaciones sobre la imagen.
 		Ingrediente i = ingredienteRepository.save(ingrediente);
-		logger.info("Guardado Ingrediente %s", i.toString());
+		logger.info("Guardado Ingrediente {}", i.toString());
 		return i;
 	}
 
@@ -51,6 +51,6 @@ public class IngredienteService {
 
 	public void delete(Ingrediente ingrediente) {
 		ingredienteRepository.delete(ingrediente);
-		logger.info("Eliminado ingrediente %s", ingrediente.toString());
+		logger.info("Eliminado ingrediente {}", ingrediente.toString());
 	}
 }

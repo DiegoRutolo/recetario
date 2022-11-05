@@ -26,10 +26,10 @@ public class FilesService {
 		try (InputStream inputStream = multipartFile.getInputStream()) {
 			Path filePath = uploadPath.resolve(fileName);
 			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-			logger.info("Guardado archivo en %s", filePath.toString());
+			logger.info("Guardado archivo en {}", filePath.toString());
 			return filePath;
 		} catch (IOException ioe) {
-			logger.error("Error guardando archivo", ioe);
+			logger.error("Error guardando archivo {}", ioe);
 			throw new IOException("Could not save image file: " + fileName, ioe);
 		}
 	}

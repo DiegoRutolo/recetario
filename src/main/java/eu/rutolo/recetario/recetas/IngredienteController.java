@@ -55,7 +55,7 @@ public class IngredienteController {
 	@PostMapping
 	public String nuevoIngredientePost(Ingrediente ingrediente, @RequestParam("archivoFoto") MultipartFile file,
 			BindingResult result, Model model) throws IOException {
-		logger.debug("Intentando guardar " + ingrediente.toString());
+		logger.debug("Intentando guardar {}", ingrediente.toString());
 		if (result.hasErrors()) {
 			logger.debug(result.toString());
 			return "recetas/ingredienteForm";
