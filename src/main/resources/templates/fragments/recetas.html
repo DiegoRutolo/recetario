@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <body>
-	<div th:fragment="receta(receta, editable)" th:object="${receta}" class="card m-3">
+	<div th:fragment="recetaTarjeta(receta, editable)" th:object="${receta}" class="card m-3">
 		<img th:src="@{/receta/foto/__*{id}__}" class="card-img-top">
 		<div class="card-body">
 			<h5 class="card-title" th:text="*{nombre}">Card title</h5>
