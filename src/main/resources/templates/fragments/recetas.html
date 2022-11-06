@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <body>
-	<div th:fragment="receta(receta, editable)" th:object="${receta}" class="card m-3">
-		<img th:src="@{/receta/foto/__*{id}__}" class="card-img-top">
+	<div th:fragment="recetaTarjeta(receta, editable)" th:object="${receta}" class="card m-3">
+		<img th:src="@{/foto/receta/__*{id}__}" class="card-img-top">
 		<div class="card-body">
 			<h5 class="card-title" th:text="*{nombre}">Card title</h5>
 			<p class="card-text" th:text="*{descripcion}"></p>
@@ -13,7 +13,7 @@
 
 	<a th:fragment="ingrediente(ingrediente)" th:object="${ingrediente}" 
 		class="list-group-item list-group-item-action"
-		th:text="*{nombre}" th:href="|@{/ingrediente/__*{id}__}|">
+		th:text="*{nombre}" th:href="@{/ingrediente/__*{id}__}">
 	</a>
 </body>
 

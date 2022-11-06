@@ -1,6 +1,7 @@
-package eu.rutolo.recetario.recetas;
+package eu.rutolo.recetario.recetas.data;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.LazyContextVariable;
 
+import eu.rutolo.recetario.recetas.model.Ingrediente;
 import eu.rutolo.recetario.security.FilesService;
 
 @Service
@@ -33,7 +35,7 @@ public class IngredienteService {
 		};
 	}
 
-	public Ingrediente findById(Long id) {
+	public Ingrediente findById(UUID id) {
 		return ingredienteRepository.findById(id)
 			.orElseThrow(IllegalArgumentException::new);
 	}
@@ -45,7 +47,7 @@ public class IngredienteService {
 		return i;
 	}
 
-	public void delete(Long id) {
+	public void delete(UUID id) {
 		delete(findById(id));
 	}
 

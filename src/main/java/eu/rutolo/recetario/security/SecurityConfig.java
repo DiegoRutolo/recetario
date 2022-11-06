@@ -23,6 +23,7 @@ public class SecurityConfig {
 			.userDetailsService(userDetailsService)
 			.authorizeRequests(auth -> auth
 				.antMatchers("/", "/login", "/logout").permitAll()
+				.antMatchers("/foto/**").permitAll()
 				.antMatchers("/admin/**").hasAuthority(Constants.ROL_ADMIN)
 				.antMatchers("/ingrediente**", "/ingrediente/**").hasAuthority(Constants.ROL_ADMIN)
 				.anyRequest().authenticated()

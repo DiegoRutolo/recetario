@@ -1,27 +1,27 @@
-package eu.rutolo.recetario.recetas;
+package eu.rutolo.recetario.recetas.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.Type;
+
 import eu.rutolo.recetario.security.users.Usuario;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
-@Data @NoArgsConstructor @AllArgsConstructor
+@Data
 public class Receta implements Serializable {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id @GeneratedValue(generator = "uuid2")
+    @Type(type = "uuid-char")
+    private UUID id;
 
     private String nombre;
 

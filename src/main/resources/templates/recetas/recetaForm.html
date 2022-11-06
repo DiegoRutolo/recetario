@@ -27,7 +27,7 @@
 			<div class="mb-3">
 				<div style="max-width: 500px;">
 					<label for="archivoFoto" class="form-label">
-						<img id="imgFoto" class="img-fluid rounded" style="width: 500px;" th:src="@{/receta/foto/__*{id}__}">
+						<img id="imgFoto" class="img-fluid rounded" style="width: 500px;" th:src="@{/foto/receta/__*{id}__}">
 					</label>
 					<input type="file" class="form-control" name="archivoFoto" id="archivoFoto" accept="image/png, image/jpg, image/jpeg">
 					<span th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}"></span>

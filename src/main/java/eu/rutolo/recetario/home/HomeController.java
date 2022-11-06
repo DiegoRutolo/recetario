@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import eu.rutolo.recetario.recetas.RecetaService;
+import eu.rutolo.recetario.recetas.data.RecetaService;
 import eu.rutolo.recetario.security.users.UserDetailsServiceImpl;
 
 @Controller

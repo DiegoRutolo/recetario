@@ -1,14 +1,11 @@
-package eu.rutolo.recetario.recetas;
+package eu.rutolo.recetario.recetas.controller;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import eu.rutolo.recetario.recetas.data.IngredienteService;
+import eu.rutolo.recetario.recetas.model.Ingrediente;
 
 @Controller
 @RequestMapping("/ingrediente")
@@ -34,17 +34,9 @@ public class IngredienteController {
 	}
 
 	@GetMapping("/{id}")
-	public String get(@PathVariable("id") Long id, Model model) {
+	public String get(@PathVariable("id") UUID id, Model model) {
 		model.addAttribute("ingrediente", ingredienteService.findById(id));
 		return "recetas/ingredienteForm";
-	}
-
-	@GetMapping(value = "/foto/{id}", produces = MediaType.IMAGE_PNG_VALUE)
-	public ResponseEntity<byte[]> getImage(@PathVariable("id") Long id) {
-		byte[] img = ingredienteService.findById(id).getFoto();
-		final HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.IMAGE_PNG);
-		return new ResponseEntity<>(img, headers, HttpStatus.OK);
 	}
 
 	@GetMapping("/new")
@@ -70,7 +62,7 @@ public class IngredienteController {
 	}
 
 	@GetMapping("/delete/{id}")
-	public String delete(@PathVariable("id") Long id, Model model) {
+	public String delete(@PathVariable("id") UUID id, Model model) {
 		ingredienteService.delete(id);
 		return "redirect:/ingrediente";
 	}
