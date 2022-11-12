@@ -1,48 +1,104 @@
-<html th:replace="~{/fragments/layout :: layout(~{::title}, ~{::#content})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{/fragments/layout :: layout(~{::#cabeza}, ~{::#content})}" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title th:text="|#{recetario} - #{common.txt.create(#{receta})}|"></title>
+	<th:block id="cabeza">
+		<title th:text="|#{recetario} - #{common.txt.create(#{receta})}|"></title>
+
+		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+		<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	</th:block>
 </head>
 
 <body>
 </body>
-	<div id="content">
+	<div id="content" class="container-fluid">
 		<h1 th:text="#{common.txt.create(#{receta})}"></h1>
 
-		<form action="#" th:action="@{/receta}" method="post" th:object="${receta}" enctype="multipart/form-data">
+		<form th:action="@{/receta}" method="post" th:object="${receta}" enctype="multipart/form-data">
 			<input type="hidden" th:field="*{id}">
 
-			<div class="mt-3 mb-3">
-				<label class="form-label" for="nombre" th:text="#{common.nombre}">Nombre</label>
-				<input class="form-control" type="text" th:field="*{nombre}" id="nombre" th:placeholder="#{common.nombre}">
-				<span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
-			</div>
+			<div class="row">
+				<div class="col">
+					<div class="mt-3 mb-3">
+						<label class="form-label" for="nombre" th:text="#{common.nombre}">Nombre</label>
+						<input class="form-control" type="text" th:field="*{nombre}" id="nombre" th:placeholder="#{common.nombre}">
+						<span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
+					</div>
+					
+					<div class="mt-3 mb-3">
+						<label class="form-label" for="descripcion">Descripcion</label>
+						<input class="form-control" type="text" th:field="*{descripcion}" id="descripcion" placeholder="Descripcion">
+						<span th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></span>
+					</div>
 
-			<div class="mt-3 mb-3">
-				<label class="form-label" for="descripcion">Descripcion</label>
-				<input class="form-control" type="text" th:field="*{descripcion}" id="descripcion" placeholder="Descripcion">
-				<span th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></span>
-			</div>
+					<fieldset class="container-fluid">
+						<legend>Ingredientes</legend>
+		
+						<div class="row mb-3">
+							<div class="col">
+								<select id="selector-ingrediente" class="form-select">
+									<option></option>
+									<option th:each="ing : ${ingredientes}" th:object="${ing}"
+										th:value="*{id}" th:text="*{nombre}"></option>
+								</select>
+								<script>
+									$(function() {
+										$('#selector-ingrediente').select2();
+									});
+								</script>
+							</div>
+							<div class="col">
+								<button id="btn-add-ing" class="btn btn-success">Añadir ingrediente</button>
+							</div>
+						</div>
 
-			<div class="mb-3">
-				<div style="max-width: 500px;">
-					<label for="archivoFoto" class="form-label">
-						<img id="imgFoto" class="img-fluid rounded" style="width: 500px;" th:src="@{/foto/receta/__*{id}__}">
-					</label>
-					<input type="file" class="form-control" name="archivoFoto" id="archivoFoto" accept="image/png, image/jpg, image/jpeg">
-					<span th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}"></span>
-					<script>
-						$(function() {
-							$('#imgFoto').click(function() {
-								$("#archivoFoto").trigger("click");
+						<div id="ings-anchor">
+							
+						</div>
+
+						<div id="ings-templ" style="display: none;">
+							<div class="row">
+								<div class="col">
+									<label class="form-label"></label>
+									<input class="form-control" type="text">
+								</div>
+							</div>
+						</div>
+
+						<script>
+							$('#btn-add-ing').click(function() {
+								console.log("boton añadir");
 							});
-						});
-					</script>
+						</script>
+					</fieldset>
+				</div>
+				
+				<div class="mb-3 col">
+					<div style="max-width: 500px;">
+						<label for="archivoFoto" class="form-label">
+							<img id="imgFoto" class="img-fluid rounded" style="width: 500px;" th:src="@{/foto/receta/__*{id}__}">
+						</label>
+						<input type="file" class="form-control" name="archivoFoto" id="archivoFoto" accept="image/png, image/jpg, image/jpeg">
+						<span th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}"></span>
+						<script>
+							$(function() {
+								$('#imgFoto').click(function() {
+									$("#archivoFoto").trigger("click");
+								});
+							});
+						</script>
+					</div>
 				</div>
 			</div>
 
-			<button type="submit" class="btn btn-primary">Guardar</button>
-			<a th:if="${receta.id}" class="btn btn-danger" th:href="@{/receta/delete/__${receta.id}__}">Eliminar</a>
+
+			
+			<div class="row">
+				<div class="col">
+					<button type="submit" class="btn btn-primary">Guardar</button>
+					<a th:if="${receta.id}" class="btn btn-danger" th:href="@{/receta/delete/__${receta.id}__}">Eliminar</a>
+				</div>
+			</div>
 		</form>
 	</div>
 

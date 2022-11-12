@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import eu.rutolo.recetario.recetas.data.IngredienteService;
 import eu.rutolo.recetario.recetas.data.RecetaService;
 import eu.rutolo.recetario.recetas.model.Receta;
 import eu.rutolo.recetario.security.users.Usuario;
@@ -29,6 +30,9 @@ public class RecetaController {
 	@Autowired
 	private RecetaService recetaService;
 
+	@Autowired
+	private IngredienteService ingredienteService;
+
 	@GetMapping
 	public String listAll(Model model, @AuthenticationPrincipal Usuario usuario) {
 		model.addAttribute("recetas", recetaService.findByCreador(usuario));
@@ -38,12 +42,14 @@ public class RecetaController {
 	@GetMapping("/{id}")
 	public String get(@PathVariable("id") UUID id, Model model) {
 		model.addAttribute("receta", recetaService.findById(id));
+		model.addAttribute("ingredientes", ingredienteService.findAll());
 		return "recetas/recetaForm";
 	}
 
 
 	@GetMapping("/new")
 	public String newRecetaGet(Receta receta, Model model) {
+		model.addAttribute("ingredientes", ingredienteService.findAll());
 		return "recetas/recetaForm";
 	}
 

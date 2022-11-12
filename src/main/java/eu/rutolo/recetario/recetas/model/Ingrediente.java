@@ -17,8 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Data @NoArgsConstructor @AllArgsConstructor
-@ToString
+@Data @NoArgsConstructor @AllArgsConstructor @ToString
 public class Ingrediente {
 	
 	@Id @GeneratedValue(generator = "uuid2")
