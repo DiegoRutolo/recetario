@@ -33,43 +33,7 @@
 
 					<fieldset class="container-fluid">
 						<legend>Ingredientes</legend>
-		
-						<div class="row mb-3">
-							<div class="col">
-								<select id="selector-ingrediente" class="form-select">
-									<option></option>
-									<option th:each="ing : ${ingredientes}" th:object="${ing}"
-										th:value="*{id}" th:text="*{nombre}"></option>
-								</select>
-								<script>
-									$(function() {
-										$('#selector-ingrediente').select2();
-									});
-								</script>
-							</div>
-							<div class="col">
-								<button id="btn-add-ing" class="btn btn-success">Añadir ingrediente</button>
-							</div>
-						</div>
 
-						<div id="ings-anchor">
-							
-						</div>
-
-						<div id="ings-templ" style="display: none;">
-							<div class="row">
-								<div class="col">
-									<label class="form-label"></label>
-									<input class="form-control" type="text">
-								</div>
-							</div>
-						</div>
-
-						<script>
-							$('#btn-add-ing').click(function() {
-								console.log("boton añadir");
-							});
-						</script>
 					</fieldset>
 				</div>
 				
@@ -90,8 +54,6 @@
 					</div>
 				</div>
 			</div>
-
-
 			
 			<div class="row">
 				<div class="col">

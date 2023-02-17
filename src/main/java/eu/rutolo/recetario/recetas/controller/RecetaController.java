@@ -47,12 +47,18 @@ public class RecetaController {
 	}
 
 
+	/**
+	 * Devuelve el formulario para crear una receta.
+	 */
 	@GetMapping("/new")
 	public String newRecetaGet(Receta receta, Model model) {
 		model.addAttribute("ingredientes", ingredienteService.findAll());
 		return "recetas/recetaForm";
 	}
 
+	/**
+	 * Recibe los datos para crear una receta nueva.
+	 */
 	@PostMapping
 	public String newRecetaPost(Receta receta, @RequestParam("archivoFoto") MultipartFile file,
 			BindingResult result, Model model, @AuthenticationPrincipal Usuario usuario) throws IOException {
@@ -85,4 +91,29 @@ public class RecetaController {
 
 		return "redirect:/receta";
 	}
+
+	/**
+	 * Formulario con la lista de ingredientes y botones para editarlos.
+	 */
+	@GetMapping("/{id}/ingredientes")
+	public String recetaIngredientesGet(@PathVariable("id") UUID id, Model model) {
+		model.addAttribute("ingredientes", ingredienteService.findAll());
+		Receta r = recetaService.findById(id);
+		r.getIngredientes().forEach(i -> logger.debug(i.getIngrediente().getNombre()));
+		model.addAttribute("receta", r);
+		return "recetas/recetaIngredientesForm";
+	}
+
+	/**
+	 * Recibe los datos para añadir un ingrediente a una receta
+	 */
+	@PostMapping("/ingrediente/add")
+	public String recetaIngredienteAddPost(@RequestParam("recetaId") UUID recetaId,
+			@RequestParam("ingredienteId") UUID ingredienteId, @RequestParam("cantidad") Float cantidad) {
+		
+		logger.debug("Añadir {} del ingrediente {} a la receta {}", cantidad, ingredienteId, recetaId);
+		recetaService.saveIngrediente(recetaService.findById(recetaId), ingredienteService.findById(ingredienteId), cantidad);
+		return "redirect:/receta";
+	}
+
 }
