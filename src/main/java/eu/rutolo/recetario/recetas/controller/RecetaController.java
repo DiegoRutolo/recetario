@@ -99,7 +99,6 @@ public class RecetaController {
 	public String recetaIngredientesGet(@PathVariable("id") UUID id, Model model) {
 		model.addAttribute("ingredientes", ingredienteService.findAll());
 		Receta r = recetaService.findById(id);
-		r.getIngredientes().forEach(i -> logger.debug(i.getIngrediente().getNombre()));
 		model.addAttribute("receta", r);
 		return "recetas/recetaIngredientesForm";
 	}

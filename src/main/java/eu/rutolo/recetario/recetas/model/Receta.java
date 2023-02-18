@@ -1,7 +1,6 @@
 package eu.rutolo.recetario.recetas.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -10,8 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Type;
 
@@ -37,7 +36,7 @@ public class Receta implements Serializable {
     @Lob
 	private byte[] foto;
 
-    @ManyToMany(targetEntity = RecetaIngrediente.class)
-    private Set<RecetaIngrediente> ingredientes = new HashSet<>();
+    @OneToMany(mappedBy = "receta")
+    private Set<RecetaIngrediente> ingredientes;
 
 }
