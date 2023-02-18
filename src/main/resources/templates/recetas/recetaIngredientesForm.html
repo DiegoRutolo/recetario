@@ -41,11 +41,8 @@
 		</form>
 
 		<!-- Lista de ingredientes actuales -->
-		<ul>
-			<li th:each="ingRec : ${receta.ingredientes}">
-				${ingRec.ingrediente.nombre} - ${ingRec.cantidad}
-			</li>
-		</ul>
+		<th:block th:replace="~{fragments/recetas :: listaIngredientes(${ingredientesReceta}, true)}">
+		</th:block>
 	</div>
 
 </html>

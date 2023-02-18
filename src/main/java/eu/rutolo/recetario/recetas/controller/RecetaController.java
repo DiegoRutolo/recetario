@@ -42,7 +42,7 @@ public class RecetaController {
 	@GetMapping("/{id}")
 	public String get(@PathVariable("id") UUID id, Model model) {
 		model.addAttribute("receta", recetaService.findById(id));
-		model.addAttribute("ingredientes", ingredienteService.findAll());
+		model.addAttribute("ingredientesReceta", recetaService.findIngredientesByReceta(id));
 		return "recetas/recetaForm";
 	}
 
@@ -100,6 +100,7 @@ public class RecetaController {
 		model.addAttribute("ingredientes", ingredienteService.findAll());
 		Receta r = recetaService.findById(id);
 		model.addAttribute("receta", r);
+		model.addAttribute("ingredientesReceta", recetaService.findIngredientesByReceta(r));
 		return "recetas/recetaIngredientesForm";
 	}
 
@@ -112,7 +113,19 @@ public class RecetaController {
 		
 		logger.debug("Añadir {} del ingrediente {} a la receta {}", cantidad, ingredienteId, recetaId);
 		recetaService.saveIngrediente(recetaService.findById(recetaId), ingredienteService.findById(ingredienteId), cantidad);
-		return "redirect:/receta";
+		return "redirect:/receta/" + recetaId + "/ingredientes";
+	}
+
+	/**
+	 * Elimina el ingrediente de la receta
+	 */
+	@PostMapping("/ingrediente/delete")
+	public String recetaIngredienteDeletePost(@RequestParam("recetaId") UUID recetaId,
+	@RequestParam("ingredienteId") UUID ingredienteId) {
+
+		logger.debug("Quitar el ingrediente {} de la receta {}", ingredienteId, recetaId);
+		recetaService.removeIngrediente(recetaId, ingredienteId);
+		return "redirect:/receta/" + recetaId + "/ingredientes";
 	}
 
 }

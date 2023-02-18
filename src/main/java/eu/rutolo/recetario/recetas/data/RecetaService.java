@@ -102,8 +102,19 @@ public class RecetaService {
 		ingredientes.forEach((k, v) -> saveIngrediente(r, k, v));
 	}
 
+	public List<RecetaIngrediente> findIngredientesByReceta(UUID recetaId) {
+        return findIngredientesByReceta(findById(recetaId));
+    }
+
 	public List<RecetaIngrediente> findIngredientesByReceta(Receta r) {
 		return recetaIngredieteRepository.findByReceta(r);
+	}
+
+	/**
+	 * Elimina el ingrediente de la receta
+	 */
+	public void removeIngrediente(UUID recetaId, UUID ingredienteId) {
+		recetaIngredieteRepository.deleteById(new RecetaIngredienteId(recetaId, ingredienteId));
 	}
 
 }

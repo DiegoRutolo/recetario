@@ -33,7 +33,8 @@
 
 					<fieldset class="container-fluid">
 						<legend>Ingredientes</legend>
-
+						<th:block th:replace="~{fragments/recetas :: listaIngredientes(${ingredientesReceta}, false)}">
+						</th:block>
 					</fieldset>
 				</div>
 				
