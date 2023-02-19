@@ -39,13 +39,25 @@ public class RecetaController {
 		return "recetas/recetasMain";
 	}
 
+	/**
+	 * Devuelve la vista no editable de una receta
+	 */
 	@GetMapping("/{id}")
+	public String view(@PathVariable("id") UUID id, Model model) {
+		model.addAttribute("receta", recetaService.findById(id));
+		model.addAttribute("ingredientesReceta", recetaService.findIngredientesByReceta(id));
+		return "recetas/recetaView";
+	}
+
+	/**
+	 * Devuelve el formulario para editar una receta
+	 */
+	@GetMapping("/{id}/edit")
 	public String get(@PathVariable("id") UUID id, Model model) {
 		model.addAttribute("receta", recetaService.findById(id));
 		model.addAttribute("ingredientesReceta", recetaService.findIngredientesByReceta(id));
 		return "recetas/recetaForm";
 	}
-
 
 	/**
 	 * Devuelve el formulario para crear una receta.

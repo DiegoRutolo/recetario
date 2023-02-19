@@ -1,0 +1,35 @@
+<html th:replace="~{/fragments/layout :: layout(~{::#cabeza}, ~{::#content})}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<th:block id="cabeza">
+		<title th:text="|#{recetario} - #{common.txt.create(#{receta})}|"></title>
+
+		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+		<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	</th:block>
+</head>
+
+<body>
+</body>
+	<div id="content" class="container-fluid" th:object="${receta}">
+		<h1 th:text="*{nombre}"></h1>
+
+		<div class="row">
+			<div class="col">
+				<p th:text="*{descripcion}"></p>
+				
+				<h2 th:text="#{ingrediente.p}"></h2>
+				<th:block th:replace="~{fragments/recetas :: listaIngredientes(${ingredientesReceta}, false)}"></th:block>
+			</div>
+			
+			<div class="mb-3 col">
+				<div style="max-width: 500px;">
+					<label for="archivoFoto" class="form-label">
+						<img id="imgFoto" class="img-fluid rounded" style="width: 500px;" th:src="@{/foto/receta/__*{id}__}">
+					</label>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</html>
