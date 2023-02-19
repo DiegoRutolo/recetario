@@ -11,7 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
 import eu.rutolo.recetario.recetas.data.RecetaRepository;
+import eu.rutolo.recetario.recetas.model.Paso;
 import eu.rutolo.recetario.recetas.model.Receta;
+import eu.rutolo.recetario.recetas.model.RecetaPasoId;
 
 @SpringBootTest
 @TestPropertySource(locations = {"classpath:application-test.properties"})
@@ -54,6 +56,24 @@ class RecetarioApplicationTests {
 		recetaRepository.delete(r1);
 		recetas = recetaRepository.findAll();
 		assertEquals(TAMANHO_INICIAL, recetas.size());
+	}
+
+	@Test
+	void crudPasos() {
+		// Crear receta
+		Receta r = new Receta();
+		r.setNombre("Patatas asadas");
+		r = recetaRepository.save(r);
+		
+		// Añadir un paso
+		Paso p1 = new Paso();
+		String DESCR_PASO_1 = "Pelar patatas";
+		p1.setId(new RecetaPasoId(r.getId(), 1));
+		p1.setDescripcion(DESCR_PASO_1);
+		r.getPasos().add(p1);
+		r = recetaRepository.save(r);
+
+		assertEquals(1, r.getPasos().size());
 	}
 
 }

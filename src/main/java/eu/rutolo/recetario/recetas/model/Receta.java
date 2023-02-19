@@ -1,14 +1,18 @@
 package eu.rutolo.recetario.recetas.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Type;
 
@@ -33,5 +37,8 @@ public class Receta implements Serializable {
 
     @Lob
 	private byte[] foto;
+
+    @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL)
+    private List<Paso> pasos = new ArrayList<>();
 
 }

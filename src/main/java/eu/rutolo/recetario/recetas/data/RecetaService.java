@@ -16,9 +16,11 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.LazyContextVariable;
 
 import eu.rutolo.recetario.recetas.model.Ingrediente;
+import eu.rutolo.recetario.recetas.model.Paso;
 import eu.rutolo.recetario.recetas.model.Receta;
 import eu.rutolo.recetario.recetas.model.RecetaIngrediente;
 import eu.rutolo.recetario.recetas.model.RecetaIngredienteId;
+import eu.rutolo.recetario.recetas.model.RecetaPasoId;
 import eu.rutolo.recetario.security.users.Usuario;
 
 @Service
@@ -32,6 +34,8 @@ public class RecetaService {
 
 	@Autowired
 	private RecetaIngredieteRepository recetaIngredieteRepository;
+
+	@Autowired PasoRepository pasoRepository;
 
 
 	public List<Receta> findAll() {
@@ -115,6 +119,31 @@ public class RecetaService {
 	 */
 	public void removeIngrediente(UUID recetaId, UUID ingredienteId) {
 		recetaIngredieteRepository.deleteById(new RecetaIngredienteId(recetaId, ingredienteId));
+	}
+
+	public List<Paso> findPasos(UUID recetaId) {
+		return pasoRepository.findByRecetaId(recetaId);
+	}
+
+	/**
+	 * Guarda la descripción como siguiente paso
+	 */
+	public void saveNewPaso(UUID recetaId, String descripcion) {
+		savePaso(recetaId, pasoRepository.findLastPaso(recetaId) + 1, descripcion);
+	}
+
+	/**
+	 * Guarda el paso indicado
+	 */
+	public void savePaso(UUID recetaId, Integer numeroPaso, String descripcion) {
+		Paso paso = new Paso();
+		paso.setId(new RecetaPasoId(recetaId, numeroPaso));
+		paso.setDescripcion(descripcion);
+		pasoRepository.save(paso);
+	}
+
+	public void deletePaso(UUID recetaId, Integer numeroPaso) {
+		pasoRepository.deleteById(new RecetaPasoId(recetaId, numeroPaso));
 	}
 
 }
