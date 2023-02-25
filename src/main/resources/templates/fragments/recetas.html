@@ -10,6 +10,7 @@
 			<a th:href="@{/receta/__*{id}__}" class="btn btn-primary">Ver</a>
 			<a th:if="${editable}" th:href="@{/receta/__*{id}__/edit}" class="btn btn-primary">Editar</a>
 			<a th:if="${editable}" th:href="@{/receta/__*{id}__/ingredientes}" class="btn btn-primary">Ingredientes</a>
+			<a th:if="${editable}" th:href="@{/receta/__*{id}__/pasos}" class="btn btn-primary">Pasos</a>
 		</div>
 	</div>
 
@@ -32,6 +33,7 @@
 	<span th:fragment="ingredienteFormateado(cantidad, ingrediente)">
 		<th:block th:text="|${ingRec.ingrediente.nombre}, ${cantidad} #{ingrediente.tipoCantidad.__${ingrediente.tipoCantidad}__}|"></th:block>
 	</span>
+
 </body>
 
 </html>

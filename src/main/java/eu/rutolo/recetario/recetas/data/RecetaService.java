@@ -136,14 +136,35 @@ public class RecetaService {
 	 * Guarda el paso indicado
 	 */
 	public void savePaso(UUID recetaId, Integer numeroPaso, String descripcion) {
+		Receta r = findById(recetaId);
+		
 		Paso paso = new Paso();
 		paso.setId(new RecetaPasoId(recetaId, numeroPaso));
 		paso.setDescripcion(descripcion);
-		pasoRepository.save(paso);
+		paso.setReceta(r);
+
+		// Como Receta es la propietaria de la relación, hay que añadir el paso y guardar la receta
+		r.getPasos().add(paso);
+		save(r);
 	}
 
 	public void deletePaso(UUID recetaId, Integer numeroPaso) {
-		pasoRepository.deleteById(new RecetaPasoId(recetaId, numeroPaso));
+		Receta receta = findById(recetaId);
+		Paso paso = pasoRepository.findById(new RecetaPasoId(recetaId, numeroPaso)).get();
+		
+		// Eliminar el paso de la lista
+		receta.getPasos().remove(paso);
+	
+		// Actualizar numeros del resto
+		for (Paso p : receta.getPasos()) {
+			if (p.getId().getNumero().compareTo(numeroPaso) > 0) {
+				p.getId().setNumero(p.getId().getNumero()-1);
+			}
+		}
+
+		// Guardar receta y borrar en bd
+		save(receta);
+		pasoRepository.delete(paso);
 	}
 
 }

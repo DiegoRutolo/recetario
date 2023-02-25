@@ -140,4 +140,39 @@ public class RecetaController {
 		return "redirect:/receta/" + recetaId + "/ingredientes";
 	}
 
+	/**
+	 * Formulario para editar los pasos de la receta.
+	 */
+	@GetMapping("/{recetaId}/pasos")
+	public String recetaPasosGet(@PathVariable("recetaId") UUID recetaId, Model model) {
+		Receta r = recetaService.findById(recetaId);
+		model.addAttribute("receta", r);
+		model.addAttribute("pasosReceta", recetaService.findPasos(recetaId));
+		return "recetas/recetaPasosForm";
+	}
+
+	/**
+	 * Recibe los datos para añadir o editar un paso. Si el numero indicado ya existe lo sobrescribe, si no lo añade.
+	 */
+	@PostMapping("/paso/save")
+	public String recetaPasoSavePost(@RequestParam("recetaId") UUID recetaId,
+			@RequestParam("numero") Integer numero, @RequestParam("descripcion") String descripcion) {
+		
+		logger.debug("Guardar paso {} a la receta {}", numero, recetaId);
+		recetaService.savePaso(recetaId, numero, descripcion);
+		return "redirect:/receta/" + recetaId + "/pasos";
+	}
+
+	/**
+	 * Elimina el ingrediente de la receta
+	 */
+	@PostMapping("/paso/delete")
+	public String recetaPasoDeletePost(@RequestParam("recetaId") UUID recetaId,
+			@RequestParam("numero") Integer numero) {
+
+		logger.debug("Eliminar paso {} de la receta {}", numero, recetaId);
+		recetaService.deletePaso(recetaId, numero);
+		return "redirect:/receta/" + recetaId + "/pasos";
+	}
+
 }

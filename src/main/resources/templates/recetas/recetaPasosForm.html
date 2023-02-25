@@ -1,0 +1,42 @@
+<html th:replace="~{/fragments/layout :: layout(~{::#cabeza}, ~{::#content})}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<th:block id="cabeza">
+		<title th:text="|#{recetario} - #{paso.p}|"></title>
+
+		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+		<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	</th:block>
+</head>
+
+<body>
+</body>
+	<div id="content" class="container-fluid">
+		<h1 th:text="#{paso.p}"></h1>
+
+		<!-- Pasos actuales, con caja editable y botones de guardar y borrar -->
+		<div class="row" th:each="p : ${receta.pasos}">
+			<div class="col">
+				<form th:action="@{/receta/paso/save}" method="post" class="form-inline">
+					<input type="hidden" name="recetaId" th:value="${receta.id}">
+					<input type="number" name="numero" th:value="${p.id.numero}" readonly="true">
+					<input type="text" name="descripcion" th:value="${p.descripcion}">
+					<button type="submit" class="btn btn-success">Guardar</button>
+					<button type="submit" th:formaction="@{/receta/paso/delete}" class="btn btn-danger">Eliminar</button>
+				</form>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<form th:action="@{/receta/paso/save}" method="post" class="form-inline">
+					<input type="hidden" name="recetaId" th:value="${receta.id}">
+					<input type="number" name="numero" th:value="${receta.pasos.size() + 1}" readonly="true">
+					<input type="text" name="descripcion">
+					<button type="submit" class="btn btn-success">Guardar</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</html>
