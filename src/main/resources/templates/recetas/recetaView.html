@@ -30,6 +30,19 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="row" >
+			<div class="col">
+				<h2>Elaboración</h2>
+				
+				<!-- Pasos -->
+				<div th:each="paso : *{pasos}">
+					<h3 th:text="|Paso ${paso.key}|"></h3>
+
+					<p th:text="${paso.value}"></p>
+				</div>
+			</div>
+		</div>
 	</div>
 
 </html>

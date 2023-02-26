@@ -55,7 +55,6 @@ public class RecetaController {
 	@GetMapping("/{id}/edit")
 	public String get(@PathVariable("id") UUID id, Model model) {
 		model.addAttribute("receta", recetaService.findById(id));
-		model.addAttribute("ingredientesReceta", recetaService.findIngredientesByReceta(id));
 		return "recetas/recetaForm";
 	}
 

@@ -30,12 +30,6 @@
 						<input class="form-control" type="text" th:field="*{descripcion}" id="descripcion" placeholder="Descripcion">
 						<span th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></span>
 					</div>
-
-					<fieldset class="container-fluid">
-						<legend>Ingredientes</legend>
-						<th:block th:replace="~{fragments/recetas :: listaIngredientes(${ingredientesReceta}, false)}">
-						</th:block>
-					</fieldset>
 				</div>
 				
 				<div class="mb-3 col">
