@@ -16,11 +16,9 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.LazyContextVariable;
 
 import eu.rutolo.recetario.recetas.model.Ingrediente;
-import eu.rutolo.recetario.recetas.model.Paso;
 import eu.rutolo.recetario.recetas.model.Receta;
 import eu.rutolo.recetario.recetas.model.RecetaIngrediente;
 import eu.rutolo.recetario.recetas.model.RecetaIngredienteId;
-import eu.rutolo.recetario.recetas.model.RecetaPasoId;
 import eu.rutolo.recetario.security.users.Usuario;
 
 @Service
@@ -34,8 +32,6 @@ public class RecetaService {
 
 	@Autowired
 	private RecetaIngredieteRepository recetaIngredieteRepository;
-
-	@Autowired PasoRepository pasoRepository;
 
 
 	public List<Receta> findAll() {
@@ -121,50 +117,19 @@ public class RecetaService {
 		recetaIngredieteRepository.deleteById(new RecetaIngredienteId(recetaId, ingredienteId));
 	}
 
-	public List<Paso> findPasos(UUID recetaId) {
-		return pasoRepository.findByRecetaId(recetaId);
-	}
-
-	/**
-	 * Guarda la descripción como siguiente paso
-	 */
-	public void saveNewPaso(UUID recetaId, String descripcion) {
-		savePaso(recetaId, pasoRepository.findLastPaso(recetaId) + 1, descripcion);
-	}
-
 	/**
 	 * Guarda el paso indicado
 	 */
 	public void savePaso(UUID recetaId, Integer numeroPaso, String descripcion) {
 		Receta r = findById(recetaId);
-		
-		Paso paso = new Paso();
-		paso.setId(new RecetaPasoId(recetaId, numeroPaso));
-		paso.setDescripcion(descripcion);
-		paso.setReceta(r);
-
-		// Como Receta es la propietaria de la relación, hay que añadir el paso y guardar la receta
-		r.getPasos().add(paso);
+		r.getPasos().put(numeroPaso, descripcion);
 		save(r);
 	}
 
 	public void deletePaso(UUID recetaId, Integer numeroPaso) {
 		Receta receta = findById(recetaId);
-		Paso paso = pasoRepository.findById(new RecetaPasoId(recetaId, numeroPaso)).get();
-		
-		// Eliminar el paso de la lista
-		receta.getPasos().remove(paso);
-	
-		// Actualizar numeros del resto
-		for (Paso p : receta.getPasos()) {
-			if (p.getId().getNumero().compareTo(numeroPaso) > 0) {
-				p.getId().setNumero(p.getId().getNumero()-1);
-			}
-		}
-
-		// Guardar receta y borrar en bd
+		receta.getPasos().remove(numeroPaso);
 		save(receta);
-		pasoRepository.delete(paso);
 	}
 
 }

@@ -147,7 +147,6 @@ public class RecetaController {
 	public String recetaPasosGet(@PathVariable("recetaId") UUID recetaId, Model model) {
 		Receta r = recetaService.findById(recetaId);
 		model.addAttribute("receta", r);
-		model.addAttribute("pasosReceta", recetaService.findPasos(recetaId));
 		return "recetas/recetaPasosForm";
 	}
 

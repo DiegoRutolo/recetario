@@ -19,8 +19,8 @@
 			<div class="col">
 				<form th:action="@{/receta/paso/save}" method="post" class="form-inline">
 					<input type="hidden" name="recetaId" th:value="${receta.id}">
-					<input type="number" name="numero" th:value="${p.id.numero}" readonly="true">
-					<input type="text" name="descripcion" th:value="${p.descripcion}">
+					<input type="number" name="numero" th:value="${p.key}" >
+					<input type="text" name="descripcion" th:value="${p.value}">
 					<button type="submit" class="btn btn-success">Guardar</button>
 					<button type="submit" th:formaction="@{/receta/paso/delete}" class="btn btn-danger">Eliminar</button>
 				</form>
@@ -31,7 +31,7 @@
 			<div class="col">
 				<form th:action="@{/receta/paso/save}" method="post" class="form-inline">
 					<input type="hidden" name="recetaId" th:value="${receta.id}">
-					<input type="number" name="numero" th:value="${receta.pasos.size() + 1}" readonly="true">
+					<input type="number" name="numero" th:value="${receta.pasos.size() + 1}" min="1" step="1">
 					<input type="text" name="descripcion">
 					<button type="submit" class="btn btn-success">Guardar</button>
 				</form>
