@@ -11,12 +11,7 @@ services:
       - '3306:3306'
     volumes:
       - dbdata:/var/lib/mysql
-  jenkins:
-    image: jenkins/jenkins:lts
-    ports: 
-      - '8090:8080'
-    volumes:
-      - jenkins-cfg:/var/jenkins_home
+  app:
+    image: openjdk:8-jdk-alpine
 volumes:
   dbdata:
-  jenkins-cfg:
