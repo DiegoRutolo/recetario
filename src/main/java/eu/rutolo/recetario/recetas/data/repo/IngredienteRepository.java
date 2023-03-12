@@ -1,4 +1,4 @@
-package eu.rutolo.recetario.recetas.data;
+package eu.rutolo.recetario.recetas.data.repo;
 
 import java.util.UUID;
 

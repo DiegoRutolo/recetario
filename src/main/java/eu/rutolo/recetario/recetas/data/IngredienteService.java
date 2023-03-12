@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.LazyContextVariable;
 
+import eu.rutolo.recetario.recetas.data.repo.IngredienteRepository;
 import eu.rutolo.recetario.recetas.model.Ingrediente;
 import eu.rutolo.recetario.security.FilesService;
 

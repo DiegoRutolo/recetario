@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import eu.rutolo.recetario.recetas.data.IngredienteService;
 import eu.rutolo.recetario.recetas.data.RecetaService;
 import eu.rutolo.recetario.recetas.model.Receta;
+import eu.rutolo.recetario.recetas.model.RecetaIngrediente;
 import eu.rutolo.recetario.security.users.Usuario;
 
 @Controller
@@ -120,10 +121,13 @@ public class RecetaController {
 	 */
 	@PostMapping("/ingrediente/add")
 	public String recetaIngredienteAddPost(@RequestParam("recetaId") UUID recetaId,
-			@RequestParam("ingredienteId") UUID ingredienteId, @RequestParam("cantidad") Float cantidad) {
-		
+			@RequestParam(name = "ingredienteId", required = false) UUID ingredienteId,
+			@RequestParam(name = "cantidad", required = false) Float cantidad,
+			@RequestParam("texto") String texto) {
+
 		logger.debug("Añadir {} del ingrediente {} a la receta {}", cantidad, ingredienteId, recetaId);
-		recetaService.saveIngrediente(recetaService.findById(recetaId), ingredienteService.findById(ingredienteId), cantidad);
+		recetaService.saveIngrediente(recetaService.findById(recetaId), ingredienteId,
+				cantidad, texto);
 		return "redirect:/receta/" + recetaId + "/ingredientes";
 	}
 
@@ -131,12 +135,13 @@ public class RecetaController {
 	 * Elimina el ingrediente de la receta
 	 */
 	@PostMapping("/ingrediente/delete")
-	public String recetaIngredienteDeletePost(@RequestParam("recetaId") UUID recetaId,
-	@RequestParam("ingredienteId") UUID ingredienteId) {
+	public String recetaIngredienteDeletePost(@RequestParam("recetaIngredienteId") UUID recetaIngredienteId) {
 
-		logger.debug("Quitar el ingrediente {} de la receta {}", ingredienteId, recetaId);
-		recetaService.removeIngrediente(recetaId, ingredienteId);
-		return "redirect:/receta/" + recetaId + "/ingredientes";
+		RecetaIngrediente ri = recetaService.findRecetaIngrediente(recetaIngredienteId);
+		logger.debug("Quitar el ingrediente {} ({}) de la receta {}", ri.getIngrediente().getNombre(), ri.getTexto(),
+				ri.getReceta().getNombre());
+		recetaService.removeIngrediente(recetaIngredienteId);
+		return "redirect:/receta/" + ri.getReceta().getId() + "/ingredientes";
 	}
 
 	/**

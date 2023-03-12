@@ -1,24 +1,31 @@
 package eu.rutolo.recetario.recetas.model;
 
-import javax.persistence.EmbeddedId;
+import java.util.UUID;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+
+import org.hibernate.annotations.Type;
 
 import lombok.Data;
 
 @Entity
 @Data
 public class RecetaIngrediente {
-	
-	@EmbeddedId
-	private RecetaIngredienteId id;
 
-	@ManyToOne @MapsId("recetaId")
+	@Id @GeneratedValue(generator = "uuid2")
+    @Type(type = "uuid-char")
+    private UUID id;
+
+	@ManyToOne(optional = false)
 	private Receta receta;
 
-	@ManyToOne @MapsId("ingredienteId")
+	@ManyToOne(optional = true)
 	private Ingrediente ingrediente;
 
 	private Float cantidad;
+
+	private String texto;
 }

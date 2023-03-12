@@ -21,17 +21,20 @@
 
 	<ul th:fragment="listaIngredientes(ingredientes, editable)">
 		<li th:each="ingRec : ${ingredientes}">
-			<span th:replace="~{:: ingredienteFormateado(${ingRec.cantidad}, ${ingRec.ingrediente})}"></span>
+			<span th:replace="~{:: ingredienteFormateado(${ingRec})}"></span>
 			<form th:if="${editable}" th:action="@{/receta/ingrediente/delete}" method="post" class="form-inline">
-				<input type="hidden" name="recetaId" th:value="${ingRec.receta.id}">
-				<input type="hidden" name="ingredienteId" th:value="${ingRec.ingrediente.id}">
+				<input type="hidden" name="recetaIngredienteId" th:value="${ingRec.id}">
 				<button type="submit" class="btn btn-danger">Eliminar</button>
 			</form>
 		</li>
 	</ul>
 
-	<span th:fragment="ingredienteFormateado(cantidad, ingrediente)">
-		<th:block th:text="|${ingRec.ingrediente.nombre}, ${cantidad} #{ingrediente.tipoCantidad.__${ingrediente.tipoCantidad}__}|"></th:block>
+	<span th:fragment="ingredienteFormateado(ingRec)">
+		<th:block th:if="${ingRec.ingrediente == null}" th:text="${ingRec.texto}"></th:block>
+		<th:block th:if="${ingRec.ingrediente != null && #strings.isEmpty(ingRec.texto)}" 
+				th:text="|${ingRec.ingrediente.nombre}, ${ingRec.cantidad} #{ingrediente.tipoCantidad.__${ingRec.ingrediente.tipoCantidad}__}|"></th:block>
+		<th:block th:if="${ingRec.ingrediente != null && not #strings.isEmpty(ingRec.texto)}" 
+				th:text="|${ingRec.ingrediente.nombre}, ${ingRec.cantidad} #{ingrediente.tipoCantidad.__${ingRec.ingrediente.tipoCantidad}__}, ${ingRec.texto}|"></th:block>
 	</span>
 
 </body>

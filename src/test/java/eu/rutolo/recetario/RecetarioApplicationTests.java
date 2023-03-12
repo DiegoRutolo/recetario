@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
-import eu.rutolo.recetario.recetas.data.RecetaRepository;
+import eu.rutolo.recetario.recetas.data.repo.RecetaRepository;
 import eu.rutolo.recetario.recetas.model.Receta;
 
 @SpringBootTest

@@ -1,7 +1,6 @@
 package eu.rutolo.recetario.recetas.data;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
@@ -9,16 +8,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.LazyContextVariable;
 
-import eu.rutolo.recetario.recetas.model.Ingrediente;
+import eu.rutolo.recetario.recetas.data.repo.RecetaIngredieteRepository;
+import eu.rutolo.recetario.recetas.data.repo.RecetaRepository;
 import eu.rutolo.recetario.recetas.model.Receta;
 import eu.rutolo.recetario.recetas.model.RecetaIngrediente;
-import eu.rutolo.recetario.recetas.model.RecetaIngredienteId;
 import eu.rutolo.recetario.security.users.Usuario;
 
 @Service
@@ -32,6 +30,9 @@ public class RecetaService {
 
 	@Autowired
 	private RecetaIngredieteRepository recetaIngredieteRepository;
+
+	@Autowired
+	private IngredienteService ingredienteService;
 
 
 	public List<Receta> findAll() {
@@ -69,6 +70,14 @@ public class RecetaService {
 		return entityManager.createQuery(cq).getResultList();
 	}
 
+	public Receta findByRecetaIngredienteId(UUID recetaIngredienteId) {
+		return recetaIngredieteRepository.findById(recetaIngredienteId).get().getReceta();
+	}
+
+	public RecetaIngrediente findRecetaIngrediente(UUID recetaIngredienteId) {
+		return recetaIngredieteRepository.findById(recetaIngredienteId).get();
+	}
+
 	public Receta create(String nombre, Usuario creador) {
 		Receta r = new Receta();
 		r.setNombre(nombre);
@@ -88,18 +97,15 @@ public class RecetaService {
 		recetaRepository.delete(r);
 	}
 
-	public void saveIngrediente(Receta r, Ingrediente i, Float cantidad) {
+	public void saveIngrediente(Receta r, UUID ingredienteId, Float cantidad, String texto) {
 		RecetaIngrediente ri = new RecetaIngrediente();
-		ri.setId(new RecetaIngredienteId(r.getId(), i.getId()));
 		ri.setReceta(r);
-		ri.setIngrediente(i);
+		if (ingredienteId != null) {
+			ri.setIngrediente(ingredienteService.findById(ingredienteId));
+		}
 		ri.setCantidad(cantidad);
+		ri.setTexto(texto);
 		recetaIngredieteRepository.save(ri);
-	}
-
-	@Transactional
-	public void saveIngredientes(Receta r, Map<Ingrediente, Float> ingredientes) {
-		ingredientes.forEach((k, v) -> saveIngrediente(r, k, v));
 	}
 
 	public List<RecetaIngrediente> findIngredientesByReceta(UUID recetaId) {
@@ -113,8 +119,8 @@ public class RecetaService {
 	/**
 	 * Elimina el ingrediente de la receta
 	 */
-	public void removeIngrediente(UUID recetaId, UUID ingredienteId) {
-		recetaIngredieteRepository.deleteById(new RecetaIngredienteId(recetaId, ingredienteId));
+	public void removeIngrediente(UUID recetaIngredienteId) {
+		recetaIngredieteRepository.deleteById(recetaIngredienteId);
 	}
 
 	/**

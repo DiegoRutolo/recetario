@@ -11,7 +11,5 @@ services:
       - '3306:3306'
     volumes:
       - dbdata:/var/lib/mysql
-  app:
-    image: openjdk:8-jdk-alpine
 volumes:
   dbdata:
