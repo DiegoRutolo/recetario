@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.LazyContextVariable;
 
@@ -22,6 +25,9 @@ public class IngredienteService {
 	private final Logger logger = LoggerFactory.getLogger(IngredienteService.class);
 
 	@Autowired
+	UserDetailsService uDetailsService;
+
+	@Autowired
 	IngredienteRepository ingredienteRepository;
 
 	@Autowired
@@ -29,6 +35,18 @@ public class IngredienteService {
 
 	@Autowired
 	FilesService filesService;
+
+	/**
+	 * Devuleve todos los ingredientes públicos.
+	 * 
+	 * Si es admin, devuelve también los de todos los usuarios.
+	 * 
+	 * Si es usuario, devuelve también los propios.
+	 */
+	public List<Ingrediente> findByUser(HttpServletRequest request) {
+		Usuario usuario = (Usuario) uDetailsService.loadUserByUsername(request.getUserPrincipal().getName());
+		return findByUser(usuario);
+	}
 
 	/**
 	 * Devuleve todos los ingredientes públicos.

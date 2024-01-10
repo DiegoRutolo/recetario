@@ -3,6 +3,8 @@ package eu.rutolo.recetario.recetas.controller;
 import java.io.IOException;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,8 +110,8 @@ public class RecetaController {
 	 * Formulario con la lista de ingredientes y botones para editarlos.
 	 */
 	@GetMapping("/{id}/ingredientes")
-	public String recetaIngredientesGet(@PathVariable("id") UUID id, Model model) {
-		model.addAttribute("ingredientes", ingredienteService.findAll());
+	public String recetaIngredientesGet(@PathVariable("id") UUID id, Model model, HttpServletRequest request) {
+		model.addAttribute("ingredientes", ingredienteService.findByUser(request));
 		Receta r = recetaService.findById(id);
 		model.addAttribute("receta", r);
 		model.addAttribute("ingredientesReceta", recetaService.findIngredientesByReceta(r));
