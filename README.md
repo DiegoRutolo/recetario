@@ -11,6 +11,16 @@ docker exec -it recetario-db-1 mysql -p recetario
 
 # Desarrollo
 
+## Acceso
+
+Usuarios y contraseñas para desarrollo en local:
+
+```
+admin:admin
+user:password
+alice:abc123.
+```
+
 ## Problemas
 
 ### Ingredientes
@@ -26,4 +36,4 @@ Se creará una tarea automática que, periodicamente, analice los ingredientes d
 unos cuantos repetidos entre varios usuarios, crea un ingrediente global a partir de éstos y eliminia los de usuario,
 liberando espacio tanto para la DB como para los usuarios.
 
-También se debe añadir una pestaña para Admins que permita crear ingredientes globales directamente.
+Cuando un admin añade un ingrediente, se añade como global.

@@ -25,7 +25,7 @@ public class SecurityConfig {
 				.antMatchers("/", "/login", "/logout").permitAll()
 				.antMatchers("/foto/**").permitAll()
 				.antMatchers("/admin/**").hasAuthority(Constants.ROL_ADMIN)
-				.antMatchers("/ingrediente**", "/ingrediente/**").hasAuthority(Constants.ROL_ADMIN)
+				// .antMatchers("/ingrediente**", "/ingrediente/**").hasAuthority(Constants.ROL_ADMIN)
 				.anyRequest().authenticated()
 			).formLogin(form -> form.permitAll()
 			).logout(logout -> logout.permitAll()

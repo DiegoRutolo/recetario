@@ -36,8 +36,9 @@ public class IngredienteController {
 	IngredienteService ingredienteService;
 
 	@GetMapping
-	public String listAll(Model model) {
-		model.addAttribute("ingredientes", ingredienteService.findAll());
+	public String listAll(Model model, HttpServletRequest request) {
+		Usuario usuario = (Usuario) uDetailsService.loadUserByUsername(request.getUserPrincipal().getName());
+		model.addAttribute("ingredientes", ingredienteService.findByUser(usuario));
 		return "recetas/ingredientes";
 	}
 
