@@ -2,6 +2,7 @@ package eu.rutolo.recetario.recetas.model;
 
 import java.util.UUID;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,6 +21,7 @@ import lombok.ToString;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorValue("Ingrediente")
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
 public class Ingrediente {
 	

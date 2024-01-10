@@ -53,7 +53,7 @@ public class IngredienteController {
 	}
 
 	@PostMapping
-	public String newIngredientePost(IngredienteUsuario ingrediente, @RequestParam("archivoFoto") MultipartFile file,
+	public String newIngredientePost(Ingrediente ingrediente, @RequestParam("archivoFoto") MultipartFile file,
 			BindingResult result, Model model, HttpServletRequest request) throws IOException {
 		logger.debug("Intentando guardar {}", ingrediente.toString());
 		if (result.hasErrors()) {
@@ -65,9 +65,13 @@ public class IngredienteController {
 			ingrediente.setFoto(file.getBytes());
 		}
 
-		ingrediente.setUsuario((Usuario) uDetailsService.loadUserByUsername(request.getUserPrincipal().getName()));
+		Usuario creador = (Usuario) uDetailsService.loadUserByUsername(request.getUserPrincipal().getName());
+		if (creador.isRolAdmin()) {
+			ingredienteService.save(ingrediente);
+		} else {
+			ingredienteService.save(new IngredienteUsuario(ingrediente, creador));
+		}
 
-		ingredienteService.save(ingrediente);
 		return "redirect:/ingrediente";
 	}
 
