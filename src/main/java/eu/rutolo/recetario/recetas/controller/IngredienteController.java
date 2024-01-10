@@ -3,9 +3,12 @@ package eu.rutolo.recetario.recetas.controller;
 import java.io.IOException;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import eu.rutolo.recetario.recetas.data.IngredienteService;
 import eu.rutolo.recetario.recetas.model.Ingrediente;
+import eu.rutolo.recetario.recetas.model.IngredienteUsuario;
+import eu.rutolo.recetario.security.users.Usuario;
 
 @Controller
 @RequestMapping("/ingrediente")
@@ -25,11 +30,14 @@ public class IngredienteController {
 	private final Logger logger = LoggerFactory.getLogger(IngredienteController.class);
 	
 	@Autowired
+	UserDetailsService uDetailsService;
+
+	@Autowired
 	IngredienteService ingredienteService;
 
 	@GetMapping
 	public String listAll(Model model) {
-		model.addAttribute("ingredientes", ingredienteService.findAllLazy());
+		model.addAttribute("ingredientes", ingredienteService.findAll());
 		return "recetas/ingredientes";
 	}
 
@@ -45,8 +53,8 @@ public class IngredienteController {
 	}
 
 	@PostMapping
-	public String newIngredientePost(Ingrediente ingrediente, @RequestParam("archivoFoto") MultipartFile file,
-			BindingResult result, Model model) throws IOException {
+	public String newIngredientePost(IngredienteUsuario ingrediente, @RequestParam("archivoFoto") MultipartFile file,
+			BindingResult result, Model model, HttpServletRequest request) throws IOException {
 		logger.debug("Intentando guardar {}", ingrediente.toString());
 		if (result.hasErrors()) {
 			logger.debug(result.toString());
@@ -56,6 +64,8 @@ public class IngredienteController {
 		if (file != null && !file.isEmpty()) {
 			ingrediente.setFoto(file.getBytes());
 		}
+
+		ingrediente.setUsuario((Usuario) uDetailsService.loadUserByUsername(request.getUserPrincipal().getName()));
 
 		ingredienteService.save(ingrediente);
 		return "redirect:/ingrediente";

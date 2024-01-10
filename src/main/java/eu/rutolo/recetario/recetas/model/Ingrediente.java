@@ -7,6 +7,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Lob;
 
 import org.hibernate.annotations.Type;
@@ -17,6 +19,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
 public class Ingrediente {
 	
