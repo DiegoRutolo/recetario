@@ -16,7 +16,9 @@ services:
   
   app:
     container_name: recetario-server
-    build: .
+    build:
+      context: recetario-app
+      dockerfile: Dockerfile
     ports:
       - 8080:8080
     environment:
@@ -26,3 +28,4 @@ services:
 
 volumes:
   dbdata:
+  
