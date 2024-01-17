@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.similarity.JaroWinklerDistance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,8 +118,39 @@ public class IngredienteService {
 		logger.info("Eliminado ingrediente {}", ingrediente.toString());
 	}
 
+	/**
+	 * Indica si los ingredientes son equivalentes según estas normas:
+	 * 
+	 * - si el tipo de cantidad es igual
+	 * - si el nombre, sin mayusculas ni caracteres especiales, es igual
+	 * - si la distancia JaroWinkler es menor a 0.1
+	 */
 	public boolean isEquivalente(Ingrediente ing1, Ingrediente ing2) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'isEquivalente'");
+		return isEquivalente(ing1, ing2, 0.1);
+	}
+
+	/**
+	 * Indica si los ingredientes son equivalentes según estas normas:
+	 * 
+	 * - si el tipo de cantidad es igual
+	 * - si el nombre, sin mayusculas ni caracteres especiales, es igual
+	 * - si la distancia JaroWinkler es menor al umbral indicado
+	 */
+	public boolean isEquivalente(Ingrediente ing1, Ingrediente ing2, double umbralDistancia) {
+		if (ing1.getTipoCantidad() != ing2.getTipoCantidad()) {
+			return false;
+		}
+
+		// Seguro que hay alguna forma mejor
+		String nom1 = StringUtils.stripAccents(StringUtils.strip(ing1.getNombre()));
+		String nom2 = StringUtils.stripAccents(StringUtils.strip(ing2.getNombre()));
+		
+		if (StringUtils.equalsIgnoreCase(nom1, nom2)) {
+			return true;
+		}
+
+		double distancia = new JaroWinklerDistance().apply(nom1, nom2);
+		
+		return distancia <= 0.1;
 	}
 }
