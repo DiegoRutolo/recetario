@@ -84,11 +84,19 @@ public class IngredienteService {
 	}
 
 	public Ingrediente findById(UUID id) {
+		if (id == null) {
+			return null;
+		}
+
 		return ingredienteRepository.findById(id)
 			.orElseThrow(IllegalArgumentException::new);
 	}
 
 	public Ingrediente save(Ingrediente ingrediente) {
+		if (ingrediente == null) {
+			return null;
+		}
+
 		// TODO: Comprobaciones sobre la imagen.
 		Ingrediente i = ingredienteRepository.save(ingrediente);
 		logger.info("Guardado Ingrediente {}", i.toString());
@@ -100,7 +108,16 @@ public class IngredienteService {
 	}
 
 	public void delete(Ingrediente ingrediente) {
+		if (ingrediente == null) {
+			return;
+		}
+
 		ingredienteRepository.delete(ingrediente);
 		logger.info("Eliminado ingrediente {}", ingrediente.toString());
+	}
+
+	public boolean isEquivalente(Ingrediente ing1, Ingrediente ing2) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'isEquivalente'");
 	}
 }
